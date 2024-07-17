@@ -41,13 +41,12 @@ class KakaoPayCrawler(BaseCrawler):
                 spans = link.find_all('span', class_='Textstyled__Text-sc-55g6e4-0 gDzMae')
                 span_contents = [span.text for span in spans]
                 job_info = {
-                    title: {
-                        "직군": span_contents[0] if len(span_contents) > 0 else "",
-                        "신입/경력": span_contents[1] if len(span_contents) > 1 else "",
-                        "근무형태": span_contents[2] if len(span_contents) > 2 else "",
-                        "직무내용": job_details,
-                        "link": url
-                    }
+                    "공고제목": title,
+                    "직군": span_contents[0] if len(span_contents) > 0 else "",
+                    "신입_경력": span_contents[1] if len(span_contents) > 1 else "",
+                    "근무형태": span_contents[2] if len(span_contents) > 2 else "",
+                    "직무내용": job_details,
+                    "link": url
                 }
                 job_data.append(job_info)
             await self.save_to_db(job_data)

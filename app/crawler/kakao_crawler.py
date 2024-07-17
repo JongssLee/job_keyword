@@ -46,13 +46,13 @@ class KakaoCrawler(BaseCrawler):
                 title = job.find('h4', class_='tit_jobs').text
                 work_experience = '경력' if '경력' in title else '신입'
                 job_info = {
-                    title: {
-                        "직군": "테크",
-                        "신입/경력": work_experience,
-                        "근무형태": job_details[0],
-                        "직무내용": job_details[1:],
-                        "링크": url
-                    }
+                    "공고제목": title,
+                    "직군": "테크",
+                    "신입_경력": work_experience,
+                    "근무형태": job_details[0],
+                    "직무내용": job_details[1:],
+                    "링크": url
+                    
                 }
                 job_data.append(job_info)
             # print(job_data)

@@ -8,3 +8,9 @@ idna==3.7
 multidict==6.0.5
 soupsieve==2.5
 yarl==1.9.4
+fastapi
+uvicorn
+pydantic
+motor
+passlib[bcrypt]
+python-jose

@@ -44,7 +44,7 @@ async def run_crawlers():
 
 async def main():
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(run_crawlers, 'interval', hours=2)
+    scheduler.add_job(run_crawlers, 'interval', seconds=10)
     scheduler.start()
 
     print("Press Ctrl+C to exit")

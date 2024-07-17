@@ -46,7 +46,7 @@ class KakaoPayCrawler(BaseCrawler):
                     "신입_경력": span_contents[1] if len(span_contents) > 1 else "",
                     "근무형태": span_contents[2] if len(span_contents) > 2 else "",
                     "직무내용": job_details,
-                    "link": url
+                    "링크": url
                 }
                 job_data.append(job_info)
             await self.save_to_db(job_data)

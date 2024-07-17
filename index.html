@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link href="https://cdn.jsdelivr.net/npm/antd@4.16.13/dist/antd.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/antd@4.16.13/dist/antd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+</head>
+<body>
+    <div id="container" style="padding: 50px; max-width: 400px; margin: auto;">
+        <h2>Sign Up</h2>
+        <form id="signup-form">
+            <div class="ant-form-item">
+                <label class="ant-form-item-label">Username</label>
+                <div class="ant-form-item-control">
+                    <input class="ant-input" type="text" name="username" required>
+                </div>
+            </div>
+            <div class="ant-form-item">
+                <label class="ant-form-item-label">Email</label>
+                <div class="ant-form-item-control">
+                    <input class="ant-input" type="email" name="email" required>
+                </div>
+            </div>
+            <div class="ant-form-item">
+                <label class="ant-form-item-label">Full Name</label>
+                <div class="ant-form-item-control">
+                    <input class="ant-input" type="text" name="full_name">
+                </div>
+            </div>
+            <div class="ant-form-item">
+                <label class="ant-form-item-label">Password</label>
+                <div class="ant-form-item-control">
+                    <input class="ant-input" type="password" name="password" required>
+                </div>
+            </div>
+            <div class="ant-form-item">
+                <button class="ant-btn ant-btn-primary" type="submit">Sign Up</button>
+            </div>
+        </form>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await axios.post('http://127.0.0.1:8000/users/', data);
+                document.getElementById('message').innerHTML = '<div class="ant-alert ant-alert-success">Sign up successful!</div>';
+            } catch (error) {
+                document.getElementById('message').innerHTML = '<div class="ant-alert ant-alert-error">Error: ' + error.response.data.detail + '</div>';
+            }
+        });
+    </script>
+</body>
+</html>

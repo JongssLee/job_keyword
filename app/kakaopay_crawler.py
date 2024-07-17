@@ -2,8 +2,8 @@ from base_crawler import BaseCrawler
 import asyncio
 
 class KakaoPayCrawler(BaseCrawler):
-    def __init__(self):
-        super().__init__("https://kakaopay.career.greetinghr.com/main", "kakaopay_jobs.json")
+    def __init__(self, db_url, db_name):
+        super().__init__("https://kakaopay.career.greetinghr.com/main", db_url, db_name, "kakaopay_jobs", "kakaopay_jobs.json")
 
     async def get_specific_info(self, url):
         html = await self.fetch_page(url)
@@ -28,13 +28,15 @@ class KakaoPayCrawler(BaseCrawler):
         if ul:
             links = ul.find_all('a')
             tasks = []
+            urls = []
             for link in links:
                 specific_url = f"https://kakaopay.career.greetinghr.com{link['href']}"
                 tasks.append(self.get_specific_info(specific_url))
+                urls.append(specific_url)
             
             job_details_list = await asyncio.gather(*tasks)
             
-            for link, job_details in zip(links, job_details_list):
+            for link, job_details, url in zip(links, job_details_list, urls):
                 title = link.find('div', class_='Textstyled__Text-sc-55g6e4-0 dYCGQ').text
                 spans = link.find_all('span', class_='Textstyled__Text-sc-55g6e4-0 gDzMae')
                 span_contents = [span.text for span in spans]
@@ -43,8 +45,10 @@ class KakaoPayCrawler(BaseCrawler):
                         "직군": span_contents[0] if len(span_contents) > 0 else "",
                         "신입/경력": span_contents[1] if len(span_contents) > 1 else "",
                         "근무형태": span_contents[2] if len(span_contents) > 2 else "",
-                        "직무내용": job_details
+                        "직무내용": job_details,
+                        "link": url
                     }
                 }
                 job_data.append(job_info)
-            await self.save_to_json({"카카오페이": job_data})
+            await self.save_to_db(job_data)
+            # await self.save_to_json({"카카오페이": job_data})

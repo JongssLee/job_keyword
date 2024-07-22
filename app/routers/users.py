@@ -48,3 +48,13 @@ async def update_keywords(keywords: KeywordUpdate, current_user: UserInDB = Depe
     )
     updated_user = await user_db.users.find_one({"username": current_user.username})
     return updated_user
+
+@router.delete("/keywords/{keyword}", response_model=UserSchema)
+async def delete_keyword(keyword: str, current_user: UserInDB = Depends(get_current_user)):
+    current_user.keywords = [kw for kw in current_user.keywords if kw != keyword]
+    await user_db.users.update_one(
+        {"username": current_user.username},
+        {"$set": {"keywords": current_user.keywords}}
+    )
+    updated_user = await user_db.users.find_one({"username": current_user.username})
+    return updated_user

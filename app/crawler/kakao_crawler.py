@@ -16,8 +16,11 @@ class KakaoCrawler(BaseCrawler):
         res.append(dd)
         div = soup.find('div', class_='cont_board board_detail')
         job_descriptions = div.find_all('p', class_='txt_cont')[3:5]
+        check = False
         for job_description in job_descriptions:
-            jobs = job_description.find_all('li')
+            #find all p or li tags
+            jobs = job_description.find_all(['li', 'p'])
+            
             for job in jobs:
                 res.append(job.text)
         return res

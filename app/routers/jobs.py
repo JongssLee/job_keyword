@@ -7,7 +7,7 @@ from app.models.job import Job, JobDetails, PyObjectId
 from typing import List, Optional, Dict
 
 router = APIRouter(
-    prefix="/jobs",
+    prefix="/api/jobs",
     tags=["jobs"],
 )
 

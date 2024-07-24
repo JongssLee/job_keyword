@@ -9,7 +9,7 @@ from app.database import user_db
 from app.utils.auth import authenticate_user, create_access_token, get_current_user
 
 router = APIRouter(
-    prefix="/api/auth",
+    prefix="/auth",
     tags=["auth"],
 )
 

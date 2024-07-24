@@ -8,7 +8,7 @@ from app.utils.auth import get_current_user
 from typing import List, Optional
 
 router = APIRouter(
-    prefix="/users",
+    prefix="/api/users",
     tags=["users"],
 )
 
